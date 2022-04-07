@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FiChevronsDown } from 'react-icons/fi'
 import api from '../../services/api';
-import { Container } from './styles';
+import { Container, CardList, Card, ButtonMore } from './styles';
 
 interface responseData {
     name: string;
@@ -25,23 +26,49 @@ const Characters: React.FC = () => {
             .catch(err => console.log(err));
     }, []);
 
+    const handleMore = useCallback(async () => {
+        try { 
+            const offset = characters.length;
+            const response = await api.get('characters', {
+                params:{
+                    offset, 
+                },
+
+            });
+
+            setCharacters([... characters, ... response.data.data.results]);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }, [characters]);
+
     return (
         <Container>
             <h1>List of Characters</h1>
-            <ul>
-                {characters.map(character => {
+            <CardList>
+                
+
+                {characters.map(character =>{
                     return (
-                    <li key={character.id}>
-                        <img
-                            src={`${character.thumbnail.path}.${character.thumbnail.extension}`} 
-                            alt=''
-                        />
-                        <span className="name">{character.name}</span>
-                        <span className="description">{character.description}</span>
-                    </li>
+                        <Card key={character.id} thumbnail={character.thumbnail}>
+                            <div id="img" />
+                            <h2>{character.name}</h2>
+                            <button type="button" name="button" class="vote">View</button>
+                            <button type="button" name="button" class="btn-view">View</button>
+                        </Card>
+                        
                     )
-                })}
-            </ul>
+
+                })};
+            </CardList>
+
+            <ButtonMore onClick={handleMore}>
+                <FiChevronsDown size={20} />
+                    More
+                <FiChevronsDown size={20} />
+                
+            </ButtonMore>
 
         </Container>
     );

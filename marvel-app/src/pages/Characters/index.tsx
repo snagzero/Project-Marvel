@@ -1,77 +1,122 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { FiChevronsDown } from 'react-icons/fi'
-import api from '../../services/api';
-import { Container, CardList, Card, ButtonMore } from './styles';
+import React, { useState, useEffect, useCallback } from 'react';
+import { FiChevronsDown, FiSearch, FiCornerDownLeft } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
-interface responseData {
-    name: string;
-    id: string;
-    description: string;
-    thumbnail: {
-        path: string;
-        extension: string;
-    };
+import api, { authKey } from '../../services/api';
+
+import { Container, Card, ButtonMore, InputLabel, } from './styles';
+
+interface CharactersDTO {
+  id: number;
+  name: string;
+  description: string;
+  thumbnail: {
+    path: string;
+    extension: string;
+  };
+
 }
 
 const Characters: React.FC = () => {
-    const [characters, setCharacters]= useState<responseData[]>([]);
-    
-    useEffect(() => {
-        api
-            .get('/characters')
-            .then(response => {
-                setCharacters(response.data.data.results);
-                console.log(characters);
-            })
-            .catch(err => console.log(err));
-    }, []);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
 
-    const handleMore = useCallback(async () => {
-        try { 
-            const offset = characters.length;
-            const response = await api.get('characters', {
-                params:{
-                    offset, 
-                },
+  const [seach, setSeach] = useState('');
 
-            });
+  const [characters, setCharacters] = useState<CharactersDTO[]>([]);
 
-            setCharacters([... characters, ... response.data.data.results]);
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }, [characters]);
+  useEffect(() => {
+    async function getCharacters(): Promise<void> {
+      try {
+        const response = await api.get(`characters?${authKey}`);
 
-    return (
-        <Container>
-            <h1>List of Characters</h1>
-            <CardList>
-                
+        setCharacters(response.data.data.results);
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
-                {characters.map(character =>{
-                    return (
-                        <Card key={character.id} thumbnail={character.thumbnail}>
-                            <div id="img" />
-                            <h2>{character.name}</h2>
-                            <button type="button" name="button" class="vote">View</button>
-                            <button type="button" name="button" class="btn-view">View</button>
-                        </Card>
-                        
-                    )
+    getCharacters();
+  }, []);
 
-                })};
-            </CardList>
+  const handleMore = useCallback(async () => {
+    try {
+      const offset = characters.length;
+      const response = await api.get(`characters?${authKey}`, {
+        params: {
+          offset,
+        },
+      });
 
-            <ButtonMore onClick={handleMore}>
-                <FiChevronsDown size={20} />
-                    More
-                <FiChevronsDown size={20} />
-                
-            </ButtonMore>
+      setCharacters([...characters, ...response.data.data.results]);
+    } catch (err) {
+      console.log('erro', err);
+    }
+  }, [characters]);
 
-        </Container>
-    );
+  const handleSeach = useCallback(async () => {
+    try {
+      const response = await api.get(`characters?${authKey}`, {
+        params: {
+          name: seach,
+        },
+      });
+      setCharacters([...response.data.data.results, ...characters]);
+      setSeach('');
+    } catch (err) {
+      console.log(err);
+    }
+  }, [seach, characters]);
+
+  return (
+    <>
+      <InputLabel isFocused={isFocused} isFilled={isFilled}>
+        <label
+          htmlFor="input"
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+        >
+          <datalist id="marvelsearch">
+
+
+          </datalist>
+          
+          <FiSearch />
+          <input
+            id="input"
+            type="search"
+            list="marvelsearch"
+            placeholder="Character Name"
+            value={seach}
+            onChange={(event) => setSeach(event.target.value)}
+            onKeyDown={(e) => (e.key === 'Enter' ? handleSeach() : '')}
+          />
+          <FiCornerDownLeft id="enter" onClick={handleSeach} />
+        </label>
+      </InputLabel>
+
+      <Container>
+        {characters.map((character) => (
+          <Card key={character.id} thumbnail={character.thumbnail}>
+            <div id="img" />
+            <h2>{character.name}</h2>
+            <div>
+                <Link to={character.description}>
+                  <button>View</button>
+                </Link>
+                <button>Vote</button>
+            </div>
+            
+          </Card>
+        ))}
+      </Container>
+      <ButtonMore onClick={handleMore}>
+        <FiChevronsDown size={20} />
+        More
+        <FiChevronsDown size={20} />
+      </ButtonMore>
+    </>
+  );
 };
 
 export default Characters;

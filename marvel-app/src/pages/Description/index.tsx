@@ -111,8 +111,8 @@ const Characters: React.FC = () => {
             </ButtonVote>
             </div>
 
-        
       </Container>
+
       <Link to="/characters">
       <ButtonBack>
         <FiChevronsLeft size={20} />

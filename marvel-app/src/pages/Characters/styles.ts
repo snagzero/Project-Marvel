@@ -32,11 +32,14 @@ export const InputLabel = styled.div<InputLabelProps>`
     ${(props) => props.isFocused
       && css`
         border: 1px solid;
-        background: #ed1d24;
+        background: #68006b;
       `}
 
     input {
       border: none;
+      color: white;
+      font-size: 19px;
+      font-weight: bold;
       background: transparent;
       margin: 10px;
     }
@@ -49,6 +52,7 @@ export const InputLabel = styled.div<InputLabelProps>`
     padding: 3px;
     border-radius: 5px;
     background: #f0131e;
+    color: white;
     cursor: pointer;
   }
 `;
@@ -58,6 +62,9 @@ export const Container = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-content: start;
+  div#button {
+    display: flex;
+    flex-direction: row;
 `;
 
 const urlImg = (props: ThumbnailDTO) => `${props.thumbnail.path}.${props.thumbnail.extension}`;
@@ -68,7 +75,7 @@ export const Card = styled.div`
   height: 450px;
   width: 20%;
   margin: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.3);
   transition: all 1.5s;
@@ -96,6 +103,7 @@ export const Card = styled.div`
     -webkit-box-shadow:0px 0px 50px 8px rgb(0,0,0);
     box-shadow: 0px 0px 50px 8px rgb(0,0,0);
   }
+
 `;
 
 export const Img = styled.div`
@@ -116,11 +124,53 @@ export const ButtonMore = styled.div`
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.3);
   margin: 20px 100px;
   padding: 0 50px;
-  border-radius: 5px;
+  border-radius: 10px;
   transition: background 0.3s;
 
   &:hover {
     background: #f0131e;
     color: white;
-  }
+  };
+`;
+
+export const ButtonVote = styled.div`
+  background: White;
+  color: #f0131e;
+  height: 30px;
+  width: 40%;
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  transition: background 0.3s;
+
+  &:hover {
+    background: #a80d15;
+    color: white;
+  };
+`;
+
+  export const ButtonView = styled.div`
+  background: White;
+  color: #f0131e;
+  height: 30px;
+  width: 40%;
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  transition: background 0.3s;
+
+  &:hover {
+    background: #a80d15;
+    color: white;
+  };
 `;

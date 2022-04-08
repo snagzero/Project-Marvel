@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { FiChevronsDown, FiSearch, FiCornerDownLeft } from 'react-icons/fi';
+import { FiChevronsDown, FiSearch, FiCornerDownLeft, FiChevronsUp } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import api, { authKey } from '../../services/api';
 
-import { Container, Card, ButtonMore, InputLabel, } from './styles';
+import { Container, Card, ButtonMore, ButtonVote, ButtonView, InputLabel, } from './styles';
 
 interface CharactersDTO {
   id: number;
@@ -21,7 +21,7 @@ const Characters: React.FC = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
-  const [seach, setSeach] = useState('');
+  const [search, setSearch] = useState('');
 
   const [characters, setCharacters] = useState<CharactersDTO[]>([]);
 
@@ -38,7 +38,7 @@ const Characters: React.FC = () => {
 
     getCharacters();
   }, []);
-
+// para carregar mais chars
   const handleMore = useCallback(async () => {
     try {
       const offset = characters.length;
@@ -54,19 +54,52 @@ const Characters: React.FC = () => {
     }
   }, [characters]);
 
-  const handleSeach = useCallback(async () => {
+//para voto
+  const handleVote = useCallback(async () => {
     try {
+      const offset = characters.length;
       const response = await api.get(`characters?${authKey}`, {
         params: {
-          name: seach,
+          offset,
+        },
+      });
+
+      setCharacters([...characters, ...response.data.data.results]);
+    } catch (err) {
+      console.log('erro', err);
+    }
+  }, [characters]);
+
+// para description
+  const handleView = useCallback(async () => {
+    try {
+      const offset = characters.length;
+      const response = await api.get(`characters?${authKey}`, {
+        params: {
+          offset,
+        },
+      });
+
+      setCharacters([...characters, ...response.data.data.results]);
+    } catch (err) {
+      console.log('erro', err);
+    }
+  }, [characters]);
+  
+// para search
+  const handleSearch = useCallback(async () => {
+    try {
+      const response = await api.get(`characters?nameStartsWith=${search}&${authKey}`, {
+        params: {
+          name: search,
         },
       });
       setCharacters([...response.data.data.results, ...characters]);
-      setSeach('');
+      setSearch('');
     } catch (err) {
       console.log(err);
     }
-  }, [seach, characters]);
+  }, [search, characters]);
 
   return (
     <>
@@ -87,11 +120,11 @@ const Characters: React.FC = () => {
             type="search"
             list="marvelsearch"
             placeholder="Character Name"
-            value={seach}
-            onChange={(event) => setSeach(event.target.value)}
-            onKeyDown={(e) => (e.key === 'Enter' ? handleSeach() : '')}
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            onKeyDown={(e) => (e.key === 'Enter' ? handleSearch() : '')}
           />
-          <FiCornerDownLeft id="enter" onClick={handleSeach} />
+          <FiCornerDownLeft id="enter" onClick={handleSearch} />
         </label>
       </InputLabel>
 
@@ -100,13 +133,16 @@ const Characters: React.FC = () => {
           <Card key={character.id} thumbnail={character.thumbnail}>
             <div id="img" />
             <h2>{character.name}</h2>
-            <div>
-                <Link to={character.description}>
-                  <button>View</button>
-                </Link>
-                <button>Vote</button>
+            <div id="button">
+            <ButtonVote onClick={handleVote}>
+            <FiChevronsUp size={20} />
+              Vote
+            <FiChevronsUp size={20} />
+            </ButtonVote>
+            <ButtonView onClick={handleView}>
+              View
+            </ButtonView>
             </div>
-            
           </Card>
         ))}
       </Container>

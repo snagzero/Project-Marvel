@@ -2,8 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  FiHeart,
   FiUser,
+  FiUsers,
 } from 'react-icons/fi';
 
 import logoMarvel from '../../assets/MarvelLogo1.svg';
@@ -16,8 +16,12 @@ const Header: React.FC = () => (
 
     <div>
       <Link to="/characters">
-        <FiUser />
+        <FiUsers />
         Characters
+      </Link>
+      <Link to="/description">
+        <FiUser />
+        Description
       </Link>
     </div>
     <DevDiv>

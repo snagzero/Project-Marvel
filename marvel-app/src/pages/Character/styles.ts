@@ -23,6 +23,22 @@ export const Container = styled.div`
   }
 `;
 
+export const ContainerD = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: left;
+  align-content: start;
+
+  div#about {
+  height: 500px;
+  width: 20%;
+  margin-left: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  }
+`;
+
 export const Name = styled.div`
   display: flex;
   width: 30%;

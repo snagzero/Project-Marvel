@@ -9,6 +9,10 @@ interface CharactersDTO {
   id: Number;
   name: String;
   description: String;
+  comics: String;
+  stories: String;
+  events: String;
+  series: String;
   thumbnail: {
     path: string;
     extension: string; 
@@ -58,6 +62,8 @@ const Character: React.FC = () => {
           <h3>{character[0]?.description}</h3>
         </div>
       </Container>
+
+          
 
       <Link to="/characters">
       <ButtonBack>

@@ -7,7 +7,7 @@ import api, { authKey } from '../../services/api';
 import { Container, Card, ButtonMore, ButtonVote, ButtonView, InputLabel, } from './styles';
 
 interface CharactersDTO {
-  votes: string[];
+  count: string;
   id: number;
   name: string;
   description: string;
@@ -56,7 +56,8 @@ const Characters: React.FC = () => {
   }, [characters]);
 
 //para voto ---- ainda nao implementado
-
+// const handleVote para dar funcao ao botao e contar votos onClick
+//usar cookies para guardas os votos e ondernar lista por numero de votos
 
   
 // para search dos characters 
@@ -124,6 +125,7 @@ const Characters: React.FC = () => {
             <div id="img" />
             <h2>{character.name}</h2>
             <div id="button">
+            <div id="app1"></div>
             <ButtonVote>
             <FiChevronsUp size={20} />
               Vote

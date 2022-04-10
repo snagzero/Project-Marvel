@@ -6,17 +6,21 @@ import api, { authKey } from '../../services/api';
 import { Container, Card, ButtonBack, Name } from './styles';
 
 interface CharactersDTO {
-  id: Number;
-  name: String;
-  description: String;
-  comics: String;
-  stories: String;
-  events: String;
-  series: String;
+  id: number;
+  name: string;
+  description: string;
   thumbnail: {
     path: string;
-    extension: string; 
-};
+    extension: string;
+  };
+  comics: {
+    items: {
+      name: string;
+    }[];
+  };
+  stories: string[];
+  events: string[];
+  series: string[];
 }
 
 const Character: React.FC = () => {
@@ -62,6 +66,8 @@ const Character: React.FC = () => {
           <h3>{character[0]?.description}</h3>
         </div>
       </Container>
+
+      
 
           
 

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import {
   FiUsers,
@@ -12,12 +12,14 @@ import { Container, DevDiv } from './styled';
 const Header: React.FC = () => (
   <Container>
     <img src={logoMarvel} alt="Marvel" />
+    
 
     <div>
       <Link to="/characters">
         <FiUsers />
         Characters
       </Link>
+     
     </div>
     <DevDiv>
       <a href="https://github.com/snagzero">

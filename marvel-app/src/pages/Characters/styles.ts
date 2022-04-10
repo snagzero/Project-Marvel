@@ -38,7 +38,7 @@ export const InputLabel = styled.div<InputLabelProps>`
     input {
       border: none;
       color: white;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: bold;
       background: transparent;
       margin: 10px;
@@ -65,6 +65,7 @@ export const Container = styled.div`
   div#button {
     display: flex;
     flex-direction: row;
+  }
 `;
 
 const urlImg = (props: ThumbnailDTO) => `${props.thumbnail.path}.${props.thumbnail.extension}`;

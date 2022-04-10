@@ -76,7 +76,7 @@ const Characters: React.FC = () => {
     try {
       const response = await api.get(`characters?${authKey}`, {
         params: {
-          name: search,
+          nameStartsWith: search,
         },
       });
       setCharacters([...response.data.data.results, ...characters]);
@@ -95,7 +95,7 @@ const Characters: React.FC = () => {
           onBlur={() => setIsFocused(false)}
         >
           <datalist id="marvelsearch">
-          <option>Black Panther</option>
+            <option>Black Panther</option>
             <option>Black Widow</option>
             <option>Captain America</option>
             <option>Doctor Strange</option>

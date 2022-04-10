@@ -32,7 +32,7 @@ export const InputLabel = styled.div<InputLabelProps>`
     ${(props) => props.isFocused
       && css`
         border: 1px solid;
-        background: #68006b;
+        background: green;
       `}
 
     input {

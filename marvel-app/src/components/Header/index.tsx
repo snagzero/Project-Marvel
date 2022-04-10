@@ -2,7 +2,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  FiUser,
   FiUsers,
 } from 'react-icons/fi';
 
@@ -18,10 +17,6 @@ const Header: React.FC = () => (
       <Link to="/characters">
         <FiUsers />
         Characters
-      </Link>
-      <Link to="/description">
-        <FiUser />
-        Description
       </Link>
     </div>
     <DevDiv>

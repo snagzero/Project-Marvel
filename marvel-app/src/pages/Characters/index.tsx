@@ -70,26 +70,11 @@ const Characters: React.FC = () => {
     }
   }, [characters]);
 
-// para description
-  const handleView = useCallback(async () => {
-    try {
-      const offset = characters.length;
-      const response = await api.get(`characters?${authKey}`, {
-        params: {
-          offset,
-        },
-      });
-
-      setCharacters([...characters, ...response.data.data.results]);
-    } catch (err) {
-      console.log('erro', err);
-    }
-  }, [characters]);
   
 // para search
   const handleSearch = useCallback(async () => {
     try {
-      const response = await api.get(`characters?nameStartsWith=${search}&${authKey}`, {
+      const response = await api.get(`characters?${authKey}`, {
         params: {
           name: search,
         },
@@ -110,6 +95,23 @@ const Characters: React.FC = () => {
           onBlur={() => setIsFocused(false)}
         >
           <datalist id="marvelsearch">
+          <option>Black Panther</option>
+            <option>Black Widow</option>
+            <option>Captain America</option>
+            <option>Doctor Strange</option>
+            <option>Drax</option>
+            <option>Falcon</option>
+            <option>Gamora</option>
+            <option>Groot</option>
+            <option>Hulk</option>
+            <option>Iron Man</option>
+            <option>Loki</option>
+            <option>Nebula</option>
+            <option>Wanda Maximoff</option>
+            <option>Spider-man</option>
+            <option>Thanos</option>
+            <option>Thor</option>
+            <option>Vision</option>
 
 
           </datalist>
@@ -139,8 +141,10 @@ const Characters: React.FC = () => {
               Vote
             <FiChevronsUp size={20} />
             </ButtonVote>
-            <ButtonView onClick={handleView}>
-              View
+            <ButtonView>
+            <Link to={`${String(character.id)}`}>
+                View
+            </Link>
             </ButtonView>
             </div>
           </Card>

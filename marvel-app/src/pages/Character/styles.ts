@@ -15,7 +15,7 @@ export const Container = styled.div`
   align-content: start;
 
   div#about {
-  height: 500px;
+    
   width: 20%;
   margin-left: 10px;
   border-radius: 10px;

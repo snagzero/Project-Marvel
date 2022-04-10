@@ -7,6 +7,7 @@ import api, { authKey } from '../../services/api';
 import { Container, Card, ButtonMore, ButtonVote, ButtonView, InputLabel, } from './styles';
 
 interface CharactersDTO {
+  votes: string[];
   id: number;
   name: string;
   description: string;
@@ -16,10 +17,10 @@ interface CharactersDTO {
   };
 
 }
-
+/* get para lista dos characteres */
 const Characters: React.FC = () => {
   const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
+  const [isFilled] = useState(false);
 
   const [search, setSearch] = useState('');
 
@@ -38,7 +39,7 @@ const Characters: React.FC = () => {
 
     getCharacters();
   }, []);
-// para carregar mais chars
+// para carregar mais chars botao no fim da pg
   const handleMore = useCallback(async () => {
     try {
       const offset = characters.length;
@@ -54,24 +55,11 @@ const Characters: React.FC = () => {
     }
   }, [characters]);
 
-//para voto
-  const handleVote = useCallback(async () => {
-    try {
-      const offset = characters.length;
-      const response = await api.get(`characters?${authKey}`, {
-        params: {
-          offset,
-        },
-      });
+//para voto ---- ainda nao implementado
 
-      setCharacters([...characters, ...response.data.data.results]);
-    } catch (err) {
-      console.log('erro', err);
-    }
-  }, [characters]);
 
   
-// para search
+// para search dos characters 
   const handleSearch = useCallback(async () => {
     try {
       const response = await api.get(`characters?${authKey}`, {
@@ -93,7 +81,7 @@ const Characters: React.FC = () => {
           htmlFor="input"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-        >
+        > {/* lista para search dos mais conhecidos da marvel */}
           <datalist id="marvelsearch">
             <option>Black Panther</option>
             <option>Black Widow</option>
@@ -136,7 +124,7 @@ const Characters: React.FC = () => {
             <div id="img" />
             <h2>{character.name}</h2>
             <div id="button">
-            <ButtonVote onClick={handleVote}>
+            <ButtonVote>
             <FiChevronsUp size={20} />
               Vote
             <FiChevronsUp size={20} />

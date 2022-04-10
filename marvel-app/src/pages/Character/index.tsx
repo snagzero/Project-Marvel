@@ -22,7 +22,7 @@ interface CharactersDTO {
   events: string[];
   series: string[];
 }
-
+/* get char pelo id */
 const Character: React.FC = () => {
   let { id }: any = useParams();
 
@@ -42,7 +42,7 @@ const Character: React.FC = () => {
     }
 
     getCharacter();
-  }, []);
+  }, [id]);
 
   return (
     <>

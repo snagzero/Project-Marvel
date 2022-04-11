@@ -1,5 +1,5 @@
 Run:
-$ cd-marvel-app
+no folder /marvel-app
 
 $ yarn install
 

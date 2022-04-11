@@ -1,4 +1,5 @@
 Run:
+$ cd-marvel-app
 
 $ yarn install
 
